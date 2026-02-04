@@ -53,7 +53,28 @@ def zad05_ukupno_sati_i_kraj_procesa(nalozi: dict, hours_per_day: int = 8) -> tu
     Vrati tuple: (ukupno_sati, krajnji_datum) gdje je krajnji_datum 'YYYY-MM-DD'.
     """
     # STUDENT CODE START
-    pass
+    ukupno_sati = 0
+    datum_zavrsetka = None
+
+    # OPCIJA
+    ukupno_sati = sum(nalog["trajanje_sati"] for nalog in nalozi.values())
+
+    for _, data in nalozi.items():
+        # ukupno_sati += data["trajanje_sati"]
+
+        kraj = add_hours_to_date(data['start'],
+                                            data["trajanje_sati"],
+                                            hours_per_day)
+
+        if datum_zavrsetka is None:
+            datum_zavrsetka = kraj
+        else:
+            if parse_date(kraj) > parse_date(datum_zavrsetka):
+                datum_zavrsetka = kraj
+        print(ukupno_sati, datum_zavrsetka)
+
+    print(ukupno_sati, datum_zavrsetka)
+    return (ukupno_sati, datum_zavrsetka)
     # STUDENT CODE END
 
 
