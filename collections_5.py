@@ -34,16 +34,32 @@ def is_weekend(date_str: str) -> bool:
     return dt.weekday() >= 5  # 5=Sat, 6=Sun
 
 
-def zad02_najduzi_zastoj(zastoj_min: tuple) -> int:
+def zad05_ukupno_sati_i_kraj_procesa(nalozi: dict, hours_per_day: int = 8) -> tuple:
     """
-    Tema: proizvodnja
-    U tuple-u su trajanja zastoja u minutama.
-    Vrati najveći zastoj (max).
+    Tema: proizvodnja (nalozi)
+    'nalozi' je rječnik:
+        {
+          "NALOG-1": {"start": "2026-02-01", "trajanje_sati": 12},
+          "NALOG-2": {"start": "2026-02-03", "trajanje_sati": 7},
+          ...
+        }
+
+    Zadatak:
+    - Izračunaj ukupno sati (zbroj svih 'trajanje_sati').
+    - Nađi datum završetka zadnjeg naloga.
+      Za svaki nalog kraj računaš pomoću helpera:
+         add_hours_to_date(start, trajanje_sati, hours_per_day)
+
+    Vrati tuple: (ukupno_sati, krajnji_datum) gdje je krajnji_datum 'YYYY-MM-DD'.
     """
     # STUDENT CODE START
-    return max(zastoj_min)
+    pass
     # STUDENT CODE END
 
 
-assert zad02_najduzi_zastoj((5, 12, 3, 12, 1)) == 12
-assert zad02_najduzi_zastoj((0,)) == 0
+nalozi = {
+    "NALOG-1": {"start": "2026-02-01", "trajanje_sati": 12},  # 2 dana -> 2026-02-03
+    "NALOG-2": {"start": "2026-02-03", "trajanje_sati": 7},   # 1 dan  -> 2026-02-04
+    "NALOG-3": {"start": "2026-02-02", "trajanje_sati": 16},  # 2 dana -> 2026-02-04
+}
+assert zad05_ukupno_sati_i_kraj_procesa(nalozi, hours_per_day=8) == (35, "2026-02-04")
