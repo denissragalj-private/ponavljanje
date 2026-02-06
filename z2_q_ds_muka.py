@@ -104,6 +104,9 @@ def average_pages_from_csv(filename):
             # 
             
         #aritm_sredina = sum_pages / (broj_knjiga-1) # oduzimam 1 jer sam počeo brojati knjige od drugog retka, a prvi redak je zaglavlje koje ne sadrži podatke o knjizi, pa sam ga preskočio, ali sam ga ipak brojao u varijabli broj_knjiga, pa sada trebam oduzeti 1 da bih dobio točan broj knjiga
+       # profesor pogriješio jel u prvoj iteraciji broj kljiga je 0, a ne 1, jer sam počeo brojati knjige od drugog retka, a prvi redak je zaglavlje koje ne sadrži podatke o knjizi, pa sam ga preskočio, ali nisam ga brojao u varijabli broj_knjiga, pa sada ne trebam oduzeti 1 da bih dobio točan broj knjiga
+       # ovo riješenje je ok, ali nije dobro jer ako nema valjanih podataka, funkcija treba vratiti 0, a ne dijeliti s 0, pa sam dodao uvjet da se aritmetička sredina računa samo ako je broj knjiga veći od 0, inače se vraća 0
+       
         aritm_sredina = sum_pages / broj_knjiga if broj_knjiga > 0 else 0
     print(aritm_sredina)
     return round(aritm_sredina, 2)
