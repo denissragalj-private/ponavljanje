@@ -13,31 +13,62 @@ Kod izvan oznaka "# START SOLUTION" i "# END SOLUTION" ne smije se mijenjati (br
 jer će to automatski označiti rješenje kao netočno.
 """
 
+def write_books_to_csv(filename, books):
+    """Writes a list of book dictionaries to a CSV file.
 
-def split_books_by_length(pages, threshold=300):
-    """Dijeli knjige na broj stranica 'iznad' i 'ispod' definirane granice."""
+    CSV columns: title,author,pages
+    """
 
-    """Funkcija split_books_by_length(pages, threshold=300) prima listu broja stranica pojedinih knjiga i pragu stranica.
-    Vraća dvije liste: prva s knjigama ispod praga, druga s knjigama jednakim ili većim od praga,
-    zadržavajući izvorni redoslijed. Prag je po zadanom 300, ali ga korisnik može promijeniti argumentom threshold."""
     # START SOLUTION
-    iznad = []
-    ispod = []
+    with open(filename, 'w') as file_writer:
+        file_writer.write(f'title,author,pages\n')
 
-    for page in pages:
-        if page < threshold:
-            ispod.append(page)
-        else:
-            iznad.append(page)
 
-    return ispod, iznad
+    for book in books:
+        # book -> {"title": "Dune", "author": "Frank Herbert", "pages": 604}
+        with open(filename, 'a') as file_writer:
+            file_writer.write(f'{book["title"]},{book["author"]},{book["pages"]}\n')
+    # END SOLUTION
 
+
+def average_pages_from_csv(filename):
+    """Čita CSV datoteku i vraća aritmetičku sredinu broja stranica."""
+
+    """Funkcija average_pages_from_csv(filename) prima naziv CSV datoteke sa stupcem 'pages'
+    i računa aritmetičku sredinu broja stranica svih knjiga. 
+    Prvu liniju (zaglavlje) treba preskočiti, a prazne ili neispravne retke ignorirati.
+    Ako nema valjanih podataka, funkcija treba vratiti 0."""
+    # START SOLUTION
+    mean = 0
+
+    try:
+        with open(filename, 'r') as file_reader:
+            file_data = file_reader.readlines()
+            for index, line in enumerate(file_data):
+                if index == 0:
+                    continue
+                number_str = line.split(sep=',')[-1]
+                mean += int(number_str.strip())
+
+            mean = mean / (len(file_data) - 1)
+
+        return round(mean, 2)
+
+    except Exception as ex:
+        print(f'Dogodila se greska {ex}')
+        return 0
     # END SOLUTION
 
 
 def main():
-    assert split_books_by_length([150, 400, 200, 500], 300) == ([150, 200], [400, 500])
-    assert split_books_by_length([], 250) == ([], [])
+    books = [
+        {"title": "Dune", "author": "Frank Herbert", "pages": 604},
+        {"title": "1984", "author": "George Orwell", "pages": 328},
+        {"title": "The Hobbit", "author": "J. R. R. Tolkien", "pages": 310},
+    ]
+    fname = "books.csv"
+    write_books_to_csv(fname, books)
+    assert round(average_pages_from_csv(fname), 2) == round((604 + 328 + 310) / 3, 2)
     print("All tests passed.")
 
 
