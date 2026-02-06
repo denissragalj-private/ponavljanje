@@ -26,6 +26,3 @@ for element in lista:
         counter += 1
 
 print(counter)
-
-
-

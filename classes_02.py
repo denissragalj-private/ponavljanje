@@ -1,4 +1,3 @@
-from typing import List
 
 
 class Product:
@@ -34,41 +33,8 @@ class Product:
         # STUDENT CODE END
 
 
-class Cart:
-    """
-    Košarica proizvoda.
 
-    Polje:
-    - items: lista Product objekata
-    """
-
-    def __init__(self):
-        # STUDENT CODE START
-        self.items = []
-        # self.items: List[Product] = []
-        # STUDENT CODE END
-
-    def add(self, product: Product) -> None:
-        """Dodaj product u items."""
-        # STUDENT CODE START
-        self.items.append(product)
-        # STUDENT CODE END
-
-    def total(self) -> int:
-        """Vrati zbroj cijena svih proizvoda u items."""
-        # STUDENT CODE START
-        # return sum(item.price for item in self.items)
-
-        total_price = 0
-        for item in self.items:
-            total_price += item.price
-
-        return total_price
-        # STUDENT CODE END
-
-
-
-# Product
+#region Product
 p1 = Product("Kruh", 2)
 p2 = Product("Sir", 10)
 assert p1.name == "Kruh" and p1.price == 2
@@ -76,10 +42,4 @@ p2.apply_discount(10)
 assert p2.price == 9
 p2.apply_discount(0)
 assert p2.price == 9
-
-
-# Cart
-c = Cart()
-c.add(p1)
-c.add(p2)
-assert c.total() == 11
+#endregion
